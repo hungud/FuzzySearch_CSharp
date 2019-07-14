@@ -15,11 +15,14 @@ namespace FuzzySearch
         static void Main(string[] args)
         {
             ITokenizer queryTokenizer = new ExactMatcher(new char[] { ' ' }, 0, 0);
-            Index.start(new NGramSearcher(new char[] { ' ' }, 2, 50));
+            long time=0;
+            //Index.start(new NGramSearcher(new char[] { ' ' }, 2, 50));
+            Index.start(new ExactMatcher(new char[] { ' ' }, 2, 50));
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
+            time = stopWatch.ElapsedMilliseconds;
             Importer.AddDirectory("files");
-            Console.WriteLine("preProcess finished In "+stopWatch.ElapsedMilliseconds);
+            Console.WriteLine("preProcess finished In "+ (stopWatch.ElapsedMilliseconds - time) + " ms");
             while (true)
             {
                 string query = Console.ReadLine();
@@ -27,15 +30,15 @@ namespace FuzzySearch
                     return;
                 foreach (string queryToken in queryTokenizer.GetTokens(query))
                 {
-                    stopWatch.Reset();
                     Console.WriteLine("****" + queryToken);
                     SameStringBuilder sameStringBuilder = new SameStringBuilder(queryToken);
-                    sameStringBuilder.ProduceSames(+1);
-                    Console.WriteLine("Produce Sames Finished In "+stopWatch.ElapsedMilliseconds+" ms");
+                    time = stopWatch.ElapsedMilliseconds;
+                    sameStringBuilder.ProduceSames(+2);
+                    Console.WriteLine("Produce Sames Finished In "+(stopWatch.ElapsedMilliseconds-time) + " ms");
                     Console.WriteLine("Number Of Sames:" + sameStringBuilder.getSames().Count);
-                    stopWatch.Reset();
+                    time = stopWatch.ElapsedMilliseconds;
                     Index.LookUp(sameStringBuilder.getSames());
-                    Console.WriteLine("Look Up finished In "+stopWatch.ElapsedMilliseconds+" ms");
+                    Console.WriteLine("Look Up finished In "+(stopWatch.ElapsedMilliseconds-time) + " ms");
                 }
             }
         }

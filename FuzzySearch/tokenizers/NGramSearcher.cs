@@ -25,7 +25,8 @@ namespace FuzzySearch.tokenizers
             HashSet<string> allStrings = new HashSet<string>();
             foreach (string str in tokens)
             {
-                allStrings.UnionWith(GetAllSubStrings(str));
+                HashSet<string> hash = GetAllSubStrings(str);
+                allStrings.UnionWith(hash);
             }
             return allStrings;
         }
@@ -33,19 +34,16 @@ namespace FuzzySearch.tokenizers
         public HashSet<string> GetAllSubStrings(string str)
         {
             HashSet<string> strings = new HashSet<string>();
-            int length = strings.Count;
+            int length = str.Length;
             for (int i = 0; i < length; i++)
             {
                 for (int j = minLength; j < maxLength; j++)
                 {
                     int startIndex = i;
-                    int endIndex = i + j;
-                    if (endIndex < length + 1)
+                    if (i + j < length + 1)
                     {
-                        strings.Add(str.Substring(startIndex, endIndex));
-                       
+                        strings.Add(str.Substring(startIndex, j));
                     }
-
                 }
             }
             return strings;

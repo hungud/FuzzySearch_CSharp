@@ -73,7 +73,8 @@ namespace FuzzySearch.dataCenter
             string[] lines = File.ReadAllLines(filePath);
             foreach(string line in lines)
             {
-                tokens.UnionWith(tokenizer.GetTokens(line));
+                HashSet<string> newTokens = tokenizer.GetTokens(line);
+                tokens.UnionWith(newTokens);
             }
         }
     }
