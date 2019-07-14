@@ -1,8 +1,12 @@
-﻿using System;
+﻿using FuzzySearch.dataCenter;
+using FuzzySearch.tokenizers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace FuzzySearch
 {
@@ -10,26 +14,30 @@ namespace FuzzySearch
     {
         static void Main(string[] args)
         {
-            HashSet<string> hash = new HashSet<string>();
-            hash.Add("ttt");
-            hash.Add("Hello");
-            HashSet<string> b = new HashSet<string>();
-            b.Add("eee");
-            b.Add("Hello");
-            b.UnionWith(hash);
-            foreach (string str in hash)
+            ITokenizer queryTokenizer = new ExactMatcher(new char[] { ' ' }, 0, 0);
+            Index.start(new NGramSearcher(new char[] { ' ' }, 2, 50));
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            Importer.AddDirectory("files");
+            Console.WriteLine("preProcess finished In "+stopWatch.ElapsedMilliseconds);
+            while (true)
             {
-                Console.WriteLine(str);
+                string query = Console.ReadLine();
+                if (query=="exit")
+                    return;
+                foreach (string queryToken in queryTokenizer.GetTokens(query))
+                {
+                    stopWatch.Reset();
+                    Console.WriteLine("****" + queryToken);
+                    SameStringBuilder sameStringBuilder = new SameStringBuilder(queryToken);
+                    sameStringBuilder.ProduceSames(+1);
+                    Console.WriteLine("Produce Sames Finished In "+stopWatch.ElapsedMilliseconds+" ms");
+                    Console.WriteLine("Number Of Sames:" + sameStringBuilder.getSames().Count);
+                    stopWatch.Reset();
+                    Index.LookUp(sameStringBuilder.getSames());
+                    Console.WriteLine("Look Up finished In "+stopWatch.ElapsedMilliseconds+" ms");
+                }
             }
-            /*Dictionary<string, string> hash = new Dictionary<string, string>();
-
-            hash["mehdi"] = "jarrahi";*/
-            /*string a = "Hello baby";
-            string[] b = a.Split(new char[]{ ' ','a'});
-            Console.WriteLine(b.Length);
-            string line = Console.ReadLine();
-            Console.WriteLine(line);*/
-            Console.ReadLine();
         }
     }
 }

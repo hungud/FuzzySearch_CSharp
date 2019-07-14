@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FuzzySearch.tokenizers;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +13,12 @@ namespace FuzzySearch.dataCenter
         private static List<Index> indexes;
        
         private static tokenizers.ITokenizer tokenizer;
-        private File file;
+        private string filePath;
         private HashSet<string> tokens = new HashSet<string>();
 
-        private Index(File file)
+        private Index(string fileName)
         {
-            this.file = file;
+            this.filePath = fileName;
         }
 
         public static void start(tokenizers.ITokenizer tokenizer)
@@ -25,23 +27,23 @@ namespace FuzzySearch.dataCenter
             indexes = new List<Index>();
         }
 
-        public static bool addIndex(File file)
+        public static bool AddIndex(string fileName)
         {
             try
             {
-                Index newIndex = new Index(file);
-                newIndex.preProcess();
-                indexes.add(newIndex);
+                Index newIndex = new Index(fileName);
+                newIndex.PreProcess();
+                indexes.Add(newIndex);
                 return true;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString);
+                Console.WriteLine(e.ToString());
                 return false;
             }
         }
 
-        public static void lookUp(HashSet<string> queryTokens)
+        public static void LookUp(HashSet<string> queryTokens)
         {
             foreach (Index index in indexes)
             {
@@ -56,21 +58,22 @@ namespace FuzzySearch.dataCenter
                 }
                 if (consists)
                 {
-                    Console.WriteLine(index.file.getPath());
+                    Console.WriteLine(index.filePath);
                 }
             }
         }
 
-        public static tokenizers.ITokenizer getTokenizer()
+        public static ITokenizer getTokenizer()
         {
             return tokenizer;
         }
 
         private void PreProcess()
         {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine()) {
-                tokens.Add(tokenizer.GetTokens(scanner.nextLine()));
+            string[] lines = File.ReadAllLines(filePath);
+            foreach(string line in lines)
+            {
+                tokens.UnionWith(tokenizer.GetTokens(line));
             }
         }
     }
