@@ -8,6 +8,6 @@ namespace FuzzySearch.tokenizers
 {
     interface ITokenizer
     {
-        HashSet<String> getTokens(String text);
+        HashSet<string> GetTokens(string text);
     }
 }
