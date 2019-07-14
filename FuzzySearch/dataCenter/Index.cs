@@ -10,11 +10,12 @@ namespace FuzzySearch.dataCenter
 {
     class Index
     {
-        private static List<Index> indexes;
+        private static Directory<string,HashSet<String>> listOfWordAddresses;
+        //private static List<Index> indexes;
        
         private static tokenizers.ITokenizer tokenizer;
         private string filePath;
-        private HashSet<string> tokens = new HashSet<string>();
+        //private HashSet<string> tokens = new HashSet<string>();
 
         private Index(string fileName)
         {
@@ -33,7 +34,7 @@ namespace FuzzySearch.dataCenter
             {
                 Index newIndex = new Index(fileName);
                 newIndex.PreProcess();
-                indexes.Add(newIndex);
+                //indexes.Add(newIndex);
                 return true;
             }
             catch (Exception e)
@@ -45,6 +46,22 @@ namespace FuzzySearch.dataCenter
 
         public static void LookUp(HashSet<string> queryTokens)
         {
+            Console.Write("mmd");
+            foreach (string queryToken in queryTokens)
+                {
+                HashSet hashSet = listOfWordAddresses[queryToken];
+                if(hashSet==null)
+                    {
+                        continue;
+                    }
+                foreach (string address in hashSet)
+                    {
+                    Console.Write(queryToken+" found in file "+address);
+                    }
+                return;
+
+                }
+            /*
             foreach (Index index in indexes)
             {
                 bool consists = false;
@@ -61,6 +78,7 @@ namespace FuzzySearch.dataCenter
                     Console.WriteLine(index.filePath);
                 }
             }
+            */
         }
 
         public static ITokenizer getTokenizer()
@@ -74,7 +92,17 @@ namespace FuzzySearch.dataCenter
             foreach(string line in lines)
             {
                 HashSet<string> newTokens = tokenizer.GetTokens(line);
-                tokens.UnionWith(newTokens);
+                foreach(string newToken in newTokens)
+                    {
+                    HashSet hashSet = listOfWordAddresses[newToken];
+                    if(hashSet==null)
+                    {
+                        hashSet = new HashSet<string>();
+                        listOfWordAddresses[newToken] = hashSet;
+                    }
+                    hashSet.Add(filePath);
+                    }
+                //tokens.UnionWith(newTokens);
             }
         }
     }
