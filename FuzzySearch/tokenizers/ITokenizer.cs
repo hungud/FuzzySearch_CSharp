@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace FuzzySearch.tokenizers
 {
-    class ITokenizer
+    interface ITokenizer
     {
+        HashSet<String> getTokens(String text);
     }
 }
