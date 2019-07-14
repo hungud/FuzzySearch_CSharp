@@ -10,23 +10,25 @@ namespace FuzzySearch
     {
         static void Main(string[] args)
         {
-            /*HashSet<string> hash = new HashSet<string>();
+            HashSet<string> hash = new HashSet<string>();
             hash.Add("ttt");
             hash.Add("Hello");
-            hash.Add("bbb");
-            hash.Add("Hello");
-            hash.Add("ttt");
-            foreach(string str in hash)
+            HashSet<string> b = new HashSet<string>();
+            b.Add("eee");
+            b.Add("Hello");
+            b.UnionWith(hash);
+            foreach (string str in hash)
             {
                 Console.WriteLine(str);
-            }*/
+            }
             /*Dictionary<string, string> hash = new Dictionary<string, string>();
 
             hash["mehdi"] = "jarrahi";*/
-
-
-            String line = Console.ReadLine();
-            Console.WriteLine(line);
+            /*string a = "Hello baby";
+            string[] b = a.Split(new char[]{ ' ','a'});
+            Console.WriteLine(b.Length);
+            string line = Console.ReadLine();
+            Console.WriteLine(line);*/
             Console.ReadLine();
         }
     }
