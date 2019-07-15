@@ -46,19 +46,21 @@ namespace FuzzySearch.dataCenter
 
         public static void LookUp(HashSet<string> queryTokens)
         {
+            int numberOfFounds = 0;
             foreach (string queryToken in queryTokens)
                 {
                 if(!listOfWordAddresses.ContainsKey(queryToken))
                     {
                         continue;
                     }
+                Console.WriteLine(listOfWordAddresses[queryToken].Count()+" cases");
+                numberOfFounds += listOfWordAddresses[queryToken].Count();
                 foreach (string address in listOfWordAddresses[queryToken])
-                    {
+                    {                   
                     Console.WriteLine(queryToken+" found in file "+address);
                     }
-                return;
-
                 }
+            Console.WriteLine(numberOfFounds + " cases founded!");
             /*
             foreach (Index index in indexes)
             {
@@ -102,4 +104,5 @@ namespace FuzzySearch.dataCenter
             }
         }
     }
+   
 }
