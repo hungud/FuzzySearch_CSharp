@@ -10,13 +10,14 @@ namespace FuzzySearch.dataCenter
 {
     class Index
     {
-        private Dictionary<string, HashSet<string>> listOfWordAddresses = new Dictionary<string, HashSet<string>>();
+        public Dictionary<string, HashSet<string>> listOfWordAddresses { get; set;}
 
         private ITokenizer tokenizer;
 
         public Index(ITokenizer tokenizer)
         {
             this.tokenizer = tokenizer;
+            listOfWordAddresses = new Dictionary<string, HashSet<string>>();
         }
 
         public bool AddFile(string filePath)
