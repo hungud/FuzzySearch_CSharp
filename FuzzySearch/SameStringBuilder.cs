@@ -18,10 +18,11 @@ namespace FuzzySearch
             };
         }
 
-        public void ProduceSames(int changes)
+        public SameStringBuilder ProduceSames(int changes)
         {
             for (; changes > 0; changes--)
                 changeOneChar();
+            return this;
         }
 
         private void changeOneChar()
@@ -35,7 +36,7 @@ namespace FuzzySearch
                 for (int i = 0; i < stringBuilder.Length; i++)
                 {
                     c = stringBuilder[i];
-                    stringBuilder.Remove(i,1);
+                    stringBuilder.Remove(i, 1);
                     newStrings.Add(stringBuilder.ToString());
                     stringBuilder.Insert(i, c);
                 }
@@ -46,7 +47,7 @@ namespace FuzzySearch
                     {
                         stringBuilder.Insert(j, (char)i);
                         newStrings.Add(stringBuilder.ToString());
-                        stringBuilder.Remove(j,1);
+                        stringBuilder.Remove(j, 1);
                     }
                 }
                 //            inserting [0-9]

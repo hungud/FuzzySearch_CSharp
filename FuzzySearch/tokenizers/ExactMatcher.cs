@@ -9,20 +9,16 @@ namespace FuzzySearch.tokenizers
     class ExactMatcher : ITokenizer
     {
         private char[] splitters;
-        private int minLength;
-        private int maxLength;
 
-        public ExactMatcher(char[] splitters, int minLength, int maxLength)
+        public ExactMatcher(char[] splitters)
         {
             this.splitters = splitters;
-            this.minLength = minLength;
-            this.maxLength = maxLength;
         }
 
 
         public HashSet<string> GetTokens(string text)
         {
-            string[] tokens = text.Split(splitters);
+            string[] tokens = text.ToLower().Split(splitters);
             return new HashSet<string>(tokens);
         }
     }

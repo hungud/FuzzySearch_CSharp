@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dataCenter\Index.cs" />
+    <Compile Include="analysers\FuzzyAnalyser.cs" />
+    <Compile Include="analysers\IAnalysers.cs" />
+    <Compile Include="Index.cs" />
     <Compile Include="Importer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

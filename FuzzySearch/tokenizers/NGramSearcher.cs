@@ -21,17 +21,16 @@ namespace FuzzySearch.tokenizers
 
         public HashSet<string> GetTokens(string text)
         {
-            string[] tokens = text.Split(splitters);
+            string[] tokens = text.ToLower().Split(splitters);
             HashSet<string> allStrings = new HashSet<string>();
             foreach (string str in tokens)
             {
-                HashSet<string> hash = GetAllSubStrings(str);
-                allStrings.UnionWith(hash);
+                allStrings.UnionWith(GetAllSubStrings(str));
             }
             return allStrings;
         }
 
-        public HashSet<string> GetAllSubStrings(string str)
+        private HashSet<string> GetAllSubStrings(string str)
         {
             HashSet<string> strings = new HashSet<string>();
             int length = str.Length;

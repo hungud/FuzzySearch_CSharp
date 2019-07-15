@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.Diagnostics;
+using FuzzySearch.analysers;
 
 namespace FuzzySearch
 {
@@ -14,31 +15,29 @@ namespace FuzzySearch
     {
         static void Main(string[] args)
         {
-            ITokenizer queryTokenizer = new ExactMatcher(new char[] { ' ' }, 0, 0);
-            long time=0;
-            //Index.start(new NGramSearcher(new char[] { ' ' }, 2, 50));
-            Index.start(new ExactMatcher(new char[] { ' ' }, 2, 50));
+            ITokenizer tokenizer = new ExactMatcher(new char[] { ' ', ',', '-', '_', '#' });
+            Index index = new Index(tokenizer);
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            time = stopWatch.ElapsedMilliseconds;
-            Importer.AddDirectory("files");
-            Console.WriteLine("preProcess finished In "+ (stopWatch.ElapsedMilliseconds - time) + " ms");
+            long time = stopWatch.ElapsedMilliseconds;
+            Importer importer = new Importer("files", index);
+            Console.WriteLine("preProcess finished In " + (stopWatch.ElapsedMilliseconds - time) + " ms");
+            FuzzyAnalyser analyser = new FuzzyAnalyser(tokenizer, index, +2);
             while (true)
             {
                 string query = Console.ReadLine();
-                if (query=="exit")
+                if (query == "exit")
                     return;
-                foreach (string queryToken in queryTokenizer.GetTokens(query))
+                time = stopWatch.ElapsedMilliseconds;
+                Dictionary<string, HashSet<string>> result = analyser.Analysis(query);
+                Console.WriteLine("Look Up finished In " + (stopWatch.ElapsedMilliseconds - time) + " ms");
+                foreach (string token in result.Keys)
                 {
-                    Console.WriteLine("****" + queryToken);
-                    SameStringBuilder sameStringBuilder = new SameStringBuilder(queryToken);
-                    time = stopWatch.ElapsedMilliseconds;
-                    sameStringBuilder.ProduceSames(+2);
-                    Console.WriteLine("Produce Sames Finished In "+(stopWatch.ElapsedMilliseconds-time) + " ms");
-                    Console.WriteLine("Number Of Sames:" + sameStringBuilder.sames.Count);
-                    time = stopWatch.ElapsedMilliseconds;
-                    Index.LookUp(sameStringBuilder.sames);
-                    Console.WriteLine("Look Up finished In "+(stopWatch.ElapsedMilliseconds-time) + " ms");
+                    Console.WriteLine("** " + token + " :");
+                    foreach (string filePath in result[token])
+                    {
+                        Console.WriteLine("    " + filePath);
+                    }
                 }
             }
         }
