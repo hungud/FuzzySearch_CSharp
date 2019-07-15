@@ -8,7 +8,7 @@ namespace FuzzySearch
 {
     class SameStringBuilder
     {
-        private HashSet<string> sames;
+        public HashSet<string> sames { get; }
 
         public SameStringBuilder(string input)
         {
@@ -39,7 +39,7 @@ namespace FuzzySearch
                     newStrings.Add(stringBuilder.ToString());
                     stringBuilder.Insert(i, c);
                 }
-                //            inserting
+                //            inserting [a-z]
                 for (int i = 'a'; i <= 'z'; i++)
                 {
                     for (int j = 0; j < stringBuilder.Length + 1; j++)
@@ -49,13 +49,18 @@ namespace FuzzySearch
                         stringBuilder.Remove(j,1);
                     }
                 }
+                //            inserting [0-9]
+                for (int i = '0'; i <= '9'; i++)
+                {
+                    for (int j = 0; j < stringBuilder.Length + 1; j++)
+                    {
+                        stringBuilder.Insert(j, (char)i);
+                        newStrings.Add(stringBuilder.ToString());
+                        stringBuilder.Remove(j, 1);
+                    }
+                }
             }
             sames.UnionWith(newStrings);
-        }
-
-        public HashSet<String> getSames()
-        {
-            return sames;
         }
     }
 }

@@ -35,9 +35,9 @@ namespace FuzzySearch
                     time = stopWatch.ElapsedMilliseconds;
                     sameStringBuilder.ProduceSames(+2);
                     Console.WriteLine("Produce Sames Finished In "+(stopWatch.ElapsedMilliseconds-time) + " ms");
-                    Console.WriteLine("Number Of Sames:" + sameStringBuilder.getSames().Count);
+                    Console.WriteLine("Number Of Sames:" + sameStringBuilder.sames.Count);
                     time = stopWatch.ElapsedMilliseconds;
-                    Index.LookUp(sameStringBuilder.getSames());
+                    Index.LookUp(sameStringBuilder.sames);
                     Console.WriteLine("Look Up finished In "+(stopWatch.ElapsedMilliseconds-time) + " ms");
                 }
             }
