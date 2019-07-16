@@ -51,10 +51,10 @@
     <Compile Include="Importer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SameStringBuilder.cs" />
-    <Compile Include="tokenizers\ExactMatcher.cs" />
+    <Compile Include="SimilarBuilder.cs" />
+    <Compile Include="tokenizers\ExactTokenizer.cs" />
     <Compile Include="tokenizers\ITokenizer.cs" />
-    <Compile Include="tokenizers\NGramSearcher.cs" />
+    <Compile Include="tokenizers\NGramTokenizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

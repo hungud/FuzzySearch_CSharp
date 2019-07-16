@@ -28,7 +28,7 @@ namespace FuzzySearch.analysers
             foreach (string token in queryTokens)
             {
                 result[token] = new HashSet<string>();
-                HashSet<string> sames = new SameStringBuilder(token).ProduceSames(number).sames;
+                HashSet<string> sames = new SimilarBuilder(token).ProduceSames(number).sames;
                 foreach (string sameToken in sames)
                 {
                     result[token].UnionWith(index.LookUp(sameToken));

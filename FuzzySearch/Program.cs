@@ -17,7 +17,7 @@ namespace FuzzySearch
     {
         static void Main(string[] args)
         {
-            ITokenizer tokenizer = new ExactMatcher(new char[] { ' ', ',', '-', '_', '#' });
+            ITokenizer tokenizer = new ExactTokenizer(new char[] { ' ', ',', '-', '_', '#' });
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
             long time;

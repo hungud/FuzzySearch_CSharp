@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FuzzySearch.tokenizers
 {
-    class NGramSearcher : ITokenizer
+    class NGramTokenizer : ITokenizer
     {
         private char[] splitters;
         private int minLength;
         private int maxLength;
 
-        public NGramSearcher(char[] splitters, int minLength, int maxLength)
+        public NGramTokenizer(char[] splitters, int minLength, int maxLength)
         {
             this.splitters = splitters;
             this.minLength = minLength;

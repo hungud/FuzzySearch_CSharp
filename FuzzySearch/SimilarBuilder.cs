@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FuzzySearch
 {
-    class SameStringBuilder
+    class SimilarBuilder
     {
         public HashSet<string> sames { get; }
 
-        public SameStringBuilder(string input)
+        public SimilarBuilder(string input)
         {
             sames = new HashSet<string>
             {
@@ -18,7 +18,7 @@ namespace FuzzySearch
             };
         }
 
-        public SameStringBuilder ProduceSames(int changes)
+        public SimilarBuilder ProduceSames(int changes)
         {
             for (; changes > 0; changes--)
                 changeOneChar();

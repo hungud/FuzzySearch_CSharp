@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FuzzySearch.tokenizers
 {
-    class ExactMatcher : ITokenizer
+    class ExactTokenizer : ITokenizer
     {
         private char[] splitters;
 
-        public ExactMatcher(char[] splitters)
+        public ExactTokenizer(char[] splitters)
         {
             this.splitters = splitters;
         }
